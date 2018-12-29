@@ -120,7 +120,8 @@ export class InvoiceListingAlternateComponent implements OnInit, AfterViewInit {
         itemsPerPage: this.itemsPerPage,
         currentPage: this.currentPageIn,
         sortFiled: this.materialSort.active, // active -> Will give the filed name/column name on which user clicked for sort
-        sortDirection: this.materialSort.direction // dirction -> will give -weather user wants ascending/decending order of sort
+        sortDirection: this.materialSort.direction, // dirction -> will give -weather user wants ascending/decending order of sort
+        filter: ''
       }) // passing argum as object (destructring concept)
       .pipe(
         tap(
@@ -133,6 +134,11 @@ export class InvoiceListingAlternateComponent implements OnInit, AfterViewInit {
         map(resp => {// fetching invoices from response body
           this.isSpinnerLoading = false;
           return resp.body['data'];
+        }),
+        catchError(() => {
+          this.isSpinnerLoading = false;
+          this.errorHandler('Failed to fetch Invoices', 'Error');
+          return empty(); // returns empty observable
         })
       );
 
