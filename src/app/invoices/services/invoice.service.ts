@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Invoice } from '../models/invoice';
 import { map } from 'rxjs/operators';
-import { CreateInvoice } from '../models/create-invoice';
-import { UpdateInvoice } from '../models/update-invoice';
+
 
 const BASE_URL = 'http://localhost:3000/api';
 
@@ -13,8 +12,13 @@ export class InvoiceService {
 
   constructor(private _http: HttpClient) { }
 
-  getInvoices(): Observable<Invoice[]> {
-    return this._http.get<Invoice[]>(`${BASE_URL}/invoice`);
+  /*   getInvoices(): Observable<Invoice[]> {
+      return this._http.get<Invoice[]>(`${BASE_URL}/invoice`);
+    } */
+  getInvoices({ itemsPerPage, currentPage }): Observable<HttpResponse<Response>> {
+    const querParams = `?pageSize=${itemsPerPage}&currentPage=${currentPage}`;
+
+    return this._http.get<Response>(`${BASE_URL}/invoice${querParams}`, { observe: 'response' });
   }
 
   createInvoice(invoice): Observable<Invoice> {

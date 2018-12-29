@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { InvoiceService } from '../../services/invoice.service';
 import { Observable } from 'rxjs';
 import { Invoice } from '../../models/invoice';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, PageEvent } from '@angular/material';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-invoice-listing',
@@ -16,6 +17,11 @@ export class InvoiceListingComponent implements OnInit {
   dataSource: Invoice[] = [];
   displayedColumns: string[] = ['item', 'quantity', 'date', 'dueDate', 'rate', 'tax', 'action'];
 
+  totalNumberOfRecords = 0;
+  itemsPerPage = 10;
+  currentPageIn = 1;
+  isSpinnerLoading = false;
+
   constructor(
     private _invoiceService: InvoiceService,
     private _router: Router,
@@ -24,7 +30,7 @@ export class InvoiceListingComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.invoices$ = this._invoiceService.getInvoices();
+    this.reInitializeTableData(); // initializing the data-table with default values for pagination
   }
 
   onClickOfAddNew() {
@@ -52,8 +58,33 @@ export class InvoiceListingComponent implements OnInit {
   }
 
   reInitializeTableData() {
-    this.invoices$ = this._invoiceService.getInvoices();
+    this.isSpinnerLoading = true;
+
+    this.invoices$ = this._invoiceService
+      .getInvoices({ itemsPerPage: this.itemsPerPage, currentPage: this.currentPageIn }) // passing argum as object (destructring concept)
+      .pipe(
+        tap(
+          resp => { // fetching total number of records from response header
+            this.totalNumberOfRecords = +resp.headers.get('record-count');
+            return resp;
+          }
+        ),
+        map(resp => {// fetching invoices from response body
+          this.isSpinnerLoading = false;
+          return resp.body['data'];
+        })
+      );
+
   }
+
+  onChangedPage(pageData: PageEvent) { // PageEvent -> Object holding-data about the current page
+
+    this.currentPageIn = pageData.pageIndex + 1; // pageIndex -> start with 0, so +1
+    this.itemsPerPage = pageData.pageSize;
+    this.reInitializeTableData();
+  }
+
+
 
   editClickHandler(id: string) {
     this._router.navigate([id], { relativeTo: this._route });
@@ -61,6 +92,7 @@ export class InvoiceListingComponent implements OnInit {
 
 
   private errorHandler(error, message) {
+    this.isSpinnerLoading = false;
     console.error(error);
     this.openSnackBar(message, 'Error');
   }
