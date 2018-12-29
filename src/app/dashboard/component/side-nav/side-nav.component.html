@@ -1,0 +1,22 @@
+<mat-sidenav-container class="app-sidenav-container">
+
+  <!-- opened and mode attributes r provide by angular-material -->
+  <mat-sidenav class="app-sidenav" [opened]="!isScreenSmall()" [mode]="isScreenSmall() ? 'over': 'push'" #sidenav>
+    <mat-toolbar color="accent">Dashboard</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="[link.url]" routerLinkActive="router-link-active" *ngFor="let link of links"
+        (click)="sidenav.close()">
+        {{ link.name }} </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="app-sidenav-content">
+
+    <app-toolbar (toogleSideNav)="sidenav.toggle()"></app-toolbar>
+    <div class="wrapper">
+      <router-outlet></router-outlet>
+    </div>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
