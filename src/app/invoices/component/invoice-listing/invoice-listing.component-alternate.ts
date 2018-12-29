@@ -1,20 +1,20 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { InvoiceService } from '../../services/invoice.service';
-import { Observable, merge, observable, empty, of } from 'rxjs';
+import { Observable, merge, observable, empty } from 'rxjs';
 import { Invoice } from '../../models/invoice';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar, PageEvent, MatSort, MatPaginator } from '@angular/material';
 import { map, tap, startWith, switchMap, catchError } from 'rxjs/operators';
 
 
-// ![UseCase]- Using RxJs operators when pagination or sorting event occurs. And not reinitalizing the table data source for every
-// !small event like- on change of page, on sort of column, on delete of row as did in InvoiceListingAlternateComponent Apporach
+// ![UseCase]- Reinitalizing the table data source for every small event like- on change of page,
+// ! on sort of column, on delete of row as did in InvoiceListingAlternateComponent Apporach
 @Component({
-  selector: 'app-invoice-listing',
-  templateUrl: './invoice-listing.component.html',
+  selector: 'app-invoice-listing-alternate',
+  templateUrl: './invoice-listing.component-alternate.html',
   styleUrls: ['./invoice-listing.component.scss']
 })
-export class InvoiceListingComponent implements OnInit, AfterViewInit {
+export class InvoiceListingAlternateComponent implements OnInit, AfterViewInit {
 
   invoices$: Observable<Invoice[]>;
   dataSource: Invoice[] = [];
@@ -26,7 +26,7 @@ export class InvoiceListingComponent implements OnInit, AfterViewInit {
   isSpinnerLoading = false;
 
   @ViewChild(MatSort) materialSort: MatSort;
-  @ViewChild(MatPaginator) materialPaginator: MatPaginator;
+  // @ViewChild(MatPaginator) materialPaginator: MatPaginator;
 
   constructor(
     private _invoiceService: InvoiceService,
@@ -39,7 +39,6 @@ export class InvoiceListingComponent implements OnInit, AfterViewInit {
 
   }
 
-  /*
   ngAfterViewInit(): void {
     // !Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     // !after view/Template is initialized then perform below logic
@@ -61,9 +60,9 @@ export class InvoiceListingComponent implements OnInit, AfterViewInit {
         })
       ).subscribe();
   }
- */
 
-  // !ALternate way of doing above code
+
+  /* // !ALternate way of doing above code
   ngAfterViewInit(): void {
     // if any of the event happens (i.e-paignation event or sorting event), then this merge operator logic will be applied
     this.invoices$ = merge(this.materialPaginator.page, this.materialSort.sortChange)
@@ -102,7 +101,7 @@ export class InvoiceListingComponent implements OnInit, AfterViewInit {
         })
 
       );
-  }
+  } */
 
 
 
@@ -113,57 +112,49 @@ export class InvoiceListingComponent implements OnInit, AfterViewInit {
   }
 
 
-  /*
-    reInitializeTableData() {
 
-      this.invoices$ = this._invoiceService
-        .getInvoices({
-          itemsPerPage: this.itemsPerPage,
-          currentPage: this.currentPageIn,
-          sortFiled: this.materialSort.active, // active -> Will give the filed name/column name on which user clicked for sort
-          sortDirection: this.materialSort.direction // dirction -> will give -weather user wants ascending/decending order of sort
-        }) // passing argum as object (destructring concept)
-        .pipe(
-          tap(
-            resp => { // fetching total number of records from response header
-              this.isSpinnerLoading = true;
-              this.totalNumberOfRecords = +resp.headers.get('record-count');
-              // return resp;
-            }
-          ),
-          map(resp => {// fetching invoices from response body
-            this.isSpinnerLoading = false;
-            return resp.body['data'];
-          })
-        );
+  reInitializeTableData() {
 
-    }
-   */
+    this.invoices$ = this._invoiceService
+      .getInvoices({
+        itemsPerPage: this.itemsPerPage,
+        currentPage: this.currentPageIn,
+        sortFiled: this.materialSort.active, // active -> Will give the filed name/column name on which user clicked for sort
+        sortDirection: this.materialSort.direction // dirction -> will give -weather user wants ascending/decending order of sort
+      }) // passing argum as object (destructring concept)
+      .pipe(
+        tap(
+          resp => { // fetching total number of records from response header
+            this.isSpinnerLoading = true;
+            this.totalNumberOfRecords = +resp.headers.get('record-count');
+            // return resp;
+          }
+        ),
+        map(resp => {// fetching invoices from response body
+          this.isSpinnerLoading = false;
+          return resp.body['data'];
+        })
+      );
 
-  /*
+  }
+
   onChangedPage(pageData: PageEvent) { // PageEvent -> Object holding-data about the current page
     this.currentPageIn = pageData.pageIndex + 1; // pageIndex -> start with 0, so +1
     this.itemsPerPage = pageData.pageSize;
     this.reInitializeTableData();
   }
- */
+
 
   deleteClickHandler(id) {
     this._invoiceService.deleteInvoice(id)
       .subscribe(
-        invoiceDeleted => {
+        data => {
 
           // !update the table
-          // this.reInitializeTableData(); // will make a bakend call (GETALL)
-
-          // !above code will not work, so to getupdated result-
-          this.invoices$.subscribe(updatedInvoices => {
-            this.invoices$ = of(updatedInvoices); // !of() -> operator is used to convert  <data-type> to Observable<data-type>
-          });
-
+          this.reInitializeTableData(); // will make a bakend call (GETALL)
 
           // !show snackbar
-          this.openSnackBar(`Deleted ${invoiceDeleted['data']['item']} successfully`, 'Success');
+          this.openSnackBar(`Deleted ${data['data']['item']} successfully`, 'Success');
         },
         err => {
           this.errorHandler(err, 'Falied to delete invoice');
@@ -185,7 +176,7 @@ export class InvoiceListingComponent implements OnInit, AfterViewInit {
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 3000,
+      duration: 2000,
     });
   }
 

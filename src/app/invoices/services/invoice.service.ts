@@ -15,9 +15,13 @@ export class InvoiceService {
   /*   getInvoices(): Observable<Invoice[]> {
       return this._http.get<Invoice[]>(`${BASE_URL}/invoice`);
     } */
-  getInvoices({ itemsPerPage, currentPage }): Observable<HttpResponse<Response>> {
-    const querParams = `?pageSize=${itemsPerPage}&currentPage=${currentPage}`;
+  getInvoices({ itemsPerPage, currentPage, sortFiled, sortDirection }): Observable<HttpResponse<Response>> {
+    let querParams = `?pageSize=${itemsPerPage}&currentPage=${currentPage}`;
 
+    if (sortFiled && sortDirection) {// sorting is provided
+      // querParams = querParams + `&sortFiled=${sortFiled}&sortDirection=${sortDirection}`;
+      querParams = `${querParams}&sortFiled=${sortFiled}&sortDirection=${sortDirection}`;
+    }
     return this._http.get<Response>(`${BASE_URL}/invoice${querParams}`, { observe: 'response' });
   }
 

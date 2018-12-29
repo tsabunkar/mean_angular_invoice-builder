@@ -6,9 +6,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { InvoiceService } from './services/invoice.service';
 import { InvoiceFormComponent } from './component/invoice-form/invoice-form.component';
+import { InvoiceListingAlternateComponent } from './component/invoice-listing/invoice-listing.component-alternate';
 
 @NgModule({
-  declarations: [InvoiceListingComponent, InvoiceFormComponent],
+  declarations: [
+    InvoiceListingComponent,
+    InvoiceFormComponent,
+    InvoiceListingAlternateComponent
+  ],
   imports: [
     CommonModule,
     MaterialModule,

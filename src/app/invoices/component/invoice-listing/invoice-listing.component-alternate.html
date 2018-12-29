@@ -78,11 +78,11 @@
 
 </div>
 <div class="paginator-center">
-  <!--   <mat-paginator (page)="onChangedPage($event)" [hidePageSize]="true" [length]="totalNumberOfRecords" [pageSize]="itemsPerPage"
-    [showFirstLastButtons]="true">
-  </mat-paginator> -->
-  <!-- !ALternate approach -->
-  <mat-paginator #materialPaginator [hidePageSize]="true" [length]="totalNumberOfRecords" [pageSize]="itemsPerPage"
+  <mat-paginator (page)="onChangedPage($event)" [hidePageSize]="true" [length]="totalNumberOfRecords" [pageSize]="itemsPerPage"
     [showFirstLastButtons]="true">
   </mat-paginator>
+  <!-- !ALternate approach -->
+  <!--   <mat-paginator #materialPaginator [hidePageSize]="true" [length]="totalNumberOfRecords" [pageSize]="itemsPerPage"
+    [showFirstLastButtons]="true">
+  </mat-paginator> -->
 </div>
