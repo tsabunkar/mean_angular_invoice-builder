@@ -16,7 +16,7 @@ import { map, tap, startWith, switchMap, catchError } from 'rxjs/operators';
 })
 export class InvoiceListingComponent implements OnInit, AfterViewInit {
 
-  invoices$: Observable<Invoice[]>;
+  // invoices$: Observable<Invoice[]>;
   invoices: Invoice[];
 
   dataSource: Invoice[] = [];
@@ -175,9 +175,18 @@ export class InvoiceListingComponent implements OnInit, AfterViewInit {
           // this.reInitializeTableData(); // will make a bakend call (GETALL)
 
           // !above code will not work, so to getupdated result-
+          /*
           this.invoices$.subscribe(updatedInvoices => {
             this.invoices$ = of(updatedInvoices); // !of() -> operator is used to convert  <data-type> to Observable<data-type>
           });
+           */
+
+          // !Since above code was for observable invoice$, but we have changed to invoice, so no need to remove invoice manually ->
+          const removedDeletedInvoices = this.invoices.filter(invoice => {
+            return invoice._id !== invoiceDeleted['data']['_id'];
+          });
+
+          this.invoices = [...removedDeletedInvoices];
 
 
           // !show snackbar
