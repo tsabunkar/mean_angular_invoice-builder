@@ -1,0 +1,44 @@
+<h1 mat-dialog-title>Form</h1>
+<div mat-dialog-content>
+  <form class="form-container" [formGroup]="clientForm">
+
+    <mat-form-field color="primary">
+      <input matInput placeholder="FirstName" type="text" formControlName="firstName">
+      <mat-error *ngIf="clientForm.controls['firstName']['invalid']
+      && clientForm.controls['firstName']['touched']">
+        FirstName is Required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field color="primary">
+      <input matInput placeholder="lastName" type="text" formControlName="lastName">
+      <mat-error *ngIf="clientForm.controls['lastName']['invalid']
+      && clientForm.controls['lastName']['touched']">
+        LastName is Required</mat-error>
+    </mat-form-field>
+
+
+    <div>
+      <mat-label>Gender</mat-label>
+      <mat-radio-group formControlName="gender">
+        <mat-radio-button [value]="true">Male</mat-radio-button>
+        <mat-radio-button [value]="false">Female</mat-radio-button>
+      </mat-radio-group>
+      <mat-error *ngIf="clientForm.controls['gender']['valid']
+          && clientForm.controls['gender']['untouched']">
+        Gender is Required</mat-error>
+
+    </div>
+
+    <mat-form-field color="primary">
+      <input matInput placeholder="email" type="email" formControlName="email">
+      <mat-error *ngIf="clientForm.controls['email']['invalid']
+      && clientForm.controls['email']['touched']">
+        Email is Required</mat-error>
+    </mat-form-field>
+
+  </form>
+</div>
+<div mat-dailog-actions>
+  <button mat-stroked-button [mat-dialog-close]="clientForm.value" [disabled]="clientForm.invalid" type="submit">Save</button>
+  <button mat-stroked-button mat-dialog-close type="submit">Cancel</button>
+</div>

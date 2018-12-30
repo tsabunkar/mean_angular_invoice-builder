@@ -15,7 +15,8 @@ export class InvoiceService {
   /*   getInvoices(): Observable<Invoice[]> {
       return this._http.get<Invoice[]>(`${BASE_URL}/invoice`);
     } */
-  getInvoices({ itemsPerPage, currentPage, sortFiled, sortDirection, filter }): Observable<HttpResponse<Response>> {
+  getInvoices({ itemsPerPage, currentPage, sortFiled, sortDirection, filter })
+    : Observable<HttpResponse<Response>> {
     let querParams = `?pageSize=${itemsPerPage}&currentPage=${currentPage}`;
 
     if (sortFiled && sortDirection) {// sorting is provided

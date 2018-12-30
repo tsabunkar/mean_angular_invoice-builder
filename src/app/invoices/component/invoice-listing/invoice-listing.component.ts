@@ -16,10 +16,9 @@ import { map, tap, startWith, switchMap, catchError } from 'rxjs/operators';
 })
 export class InvoiceListingComponent implements OnInit, AfterViewInit {
 
-  // invoices$: Observable<Invoice[]>;
+  invoices$: Observable<Invoice[]>;
   invoices: Invoice[];
 
-  dataSource: Invoice[] = [];
   displayedColumns: string[] = ['item', 'quantity', 'date', 'dueDate', 'rate', 'tax', 'action'];
 
   totalNumberOfRecords = 0;
@@ -248,7 +247,8 @@ export class InvoiceListingComponent implements OnInit, AfterViewInit {
           this.isSpinnerLoading = false;
         }
         )
-      ).subscribe(data => { this.invoices = data; }); // !directly rendering the template by using async pipe is not working,
+      )
+      .subscribe(data => { this.invoices = data; }); // !directly rendering the template by using async pipe is not working,
     // !as ngAfterviewInit() func will not detect Observable, rather it will detect subscribe() function
   }
 
