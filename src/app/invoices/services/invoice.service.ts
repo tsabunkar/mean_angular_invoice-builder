@@ -39,6 +39,7 @@ export class InvoiceService {
       dueDate: invoice.duedateControl,
       rate: invoice.rateControl,
       tax: invoice.taxControl,
+      client: invoice.clientControl
     };
     console.log('payload', payload);
     return this._http.post<Invoice>(`${BASE_URL}/invoice`, payload);
@@ -60,6 +61,8 @@ export class InvoiceService {
           responseData['duedateControl'] = responseData['data']['dueDate'];
           responseData['rateControl'] = responseData['data']['rate'];
           responseData['taxControl'] = responseData['data']['tax'];
+          responseData['clientControl'] = responseData['data']['client'];
+
           console.log('responseData', responseData);
           return responseData;
         })
@@ -75,6 +78,7 @@ export class InvoiceService {
       dueDate: invoice.duedateControl,
       rate: invoice.rateControl,
       tax: invoice.taxControl,
+      client: invoice.clientControl
     };
 
     return this._http.put<Invoice>(`${BASE_URL}/invoice/${id}`, payload);

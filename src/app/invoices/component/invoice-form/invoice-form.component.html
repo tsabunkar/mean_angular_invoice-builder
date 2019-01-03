@@ -43,6 +43,17 @@
       <input matInput placeholder="Tax" type="number" formControlName="taxControl">
     </mat-form-field>
 
+    <mat-form-field color="primary">
+      <mat-select placeholder="Select Clients" formControlName="clientControl">
+        <mat-option *ngFor="let client of clients$ | async" [value]="client._id">
+          {{client.firstName}} - {{client.lastName}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="invoiceFormGroup.controls['clientControl']['invalid']
+      && invoiceFormGroup.controls['clientControl']['touched']">
+        Client is Required </mat-error>
+    </mat-form-field>
+
     <div>
       <button mat-raised-button type="submit" [disabled]="invoiceFormGroup.invalid" color="primary">
         Save

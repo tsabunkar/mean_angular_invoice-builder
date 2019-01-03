@@ -90,11 +90,14 @@ export class ClientListingComponent implements OnInit {
         formData => {
           console.log(formData);
 
-          if (clientId) { // !EIDT MODE
-            return this._clientService.updateClient(clientId, formData);
-          } else {
-            return this._clientService.createClient(formData);
-          }
+          /*  if (clientId) { // !EIDT MODE
+             return this._clientService.updateClient(clientId, formData);
+           } else {
+             return this._clientService.createClient(formData);
+           } */
+
+          return clientId ? this._clientService.updateClient(clientId, formData)
+            : this._clientService.createClient(formData);
         }),
 
 

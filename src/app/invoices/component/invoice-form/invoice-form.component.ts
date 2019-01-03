@@ -5,6 +5,10 @@ import { MatSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Invoice } from '../../models/invoice';
 import { UpdateInvoice } from '../../models/update-invoice';
+import { ClientService } from 'src/app/clients/services/client.service';
+import { Client } from 'src/app/clients/models/client';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-invoice-form',
@@ -15,15 +19,18 @@ export class InvoiceFormComponent implements OnInit {
 
   invoiceFormGroup: FormGroup;
   private updatedInvoiceOnEdit: {};
+  clients$: Observable<Client[]>;
 
   constructor(private _formBuilder: FormBuilder,
     private _invoiceService: InvoiceService,
     private snackBar: MatSnackBar,
     private _router: Router,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _clientService: ClientService
   ) { }
 
   ngOnInit() {
+    this.setClientsList();
     this.createForm();
     this.updateInvoiceFormOnEdit();
   }
@@ -36,6 +43,7 @@ export class InvoiceFormComponent implements OnInit {
       duedateControl: ['', Validators.required],
       rateControl: '',
       taxControl: '',
+      clientControl: ['', Validators.required]
     });
   }
 
@@ -102,6 +110,15 @@ export class InvoiceFormComponent implements OnInit {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
+  }
+
+  private setClientsList(): Observable<Client[]> | void {
+    this.clients$ = this._clientService.getClients()
+      .pipe(
+        map(respData => {
+          return respData.body['data'];
+        })
+      );
   }
 
 
