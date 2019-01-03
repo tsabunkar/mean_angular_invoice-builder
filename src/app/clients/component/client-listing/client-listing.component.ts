@@ -17,7 +17,7 @@ export class ClientListingComponent implements OnInit {
   clients$: Observable<Client[]>;
   isSpinnerLoading = false;
 
-  displayedColumns: string[] = ['firstNameCol', 'lastNameCol', 'genderCol', 'emailCol'];
+  displayedColumns: string[] = ['firstNameCol', 'lastNameCol', 'genderCol', 'emailCol', 'actionCol'];
 
   constructor(private _clientService: ClientService,
     public dialog: MatDialog,
@@ -37,12 +37,18 @@ export class ClientListingComponent implements OnInit {
       );
   }
 
-  onClickOfAddNewClient(): void {
-    const dialogRef = this.dialog.open(DialogFormComponent, {
+  onClickOfAddNewClient(clientId): void {
+    const options = { // create new
       width: '400px',
       height: '350px',
       data: {} // send data to dailogComponent
-    });
+    };
+
+    if (clientId) { // clientId exist, that is paramter is passed (EDIT MODE)
+      options.data = { clientId };
+    }
+
+    const dialogRef = this.dialog.open(DialogFormComponent, options);
 
     /*
         dialogRef.afterClosed().subscribe(
@@ -67,6 +73,15 @@ export class ClientListingComponent implements OnInit {
         this.isSpinnerLoading = true;
       }),
 
+      map(formData => {
+        if (formData) {
+          return formData; // continue the flow
+        } else { // cancel btn is clicked formData value would be empty then execute else block
+          this.isSpinnerLoading = false;
+          return;
+        }
+      }),
+
       // ! When Form is closed (irrespective of save or cancel) -> this afterClosed() observable is called, so only calling backend POST
       // ! when form is saved, not closed or cancelled so using filter() operator [Similar to filter() method of array]
       filter(formData => typeof (formData) === 'object'),
@@ -74,7 +89,12 @@ export class ClientListingComponent implements OnInit {
       flatMap( // flatMap() operator should be returned by observable type
         formData => {
           console.log(formData);
-          return this._clientService.createClient(formData);
+
+          if (clientId) { // !EIDT MODE
+            return this._clientService.updateClient(clientId, formData);
+          } else {
+            return this._clientService.createClient(formData);
+          }
         }),
 
 
@@ -96,8 +116,30 @@ export class ClientListingComponent implements OnInit {
   } // end of onClickOfAddNewClient()
 
 
+
+
+  deleteClickHandler(clientId) {
+    this._clientService.deleteClient(clientId)
+      .subscribe(
+        clientDeleted => {
+
+
+          this.clients$.subscribe(updatedInvoices => {
+            this.clients$ = of(updatedInvoices); // !of() -> operator is used to convert  <data-type> to Observable<data-type>
+          });
+
+
+          // !show snackbar
+          this.openSnackBar(`Deleted ${clientDeleted['data']['item']} successfully`, 'Success');
+        },
+        err => {
+          this.errorHandler(err, 'Falied to delete client');
+        }
+      );
+  }
+
+
   private errorHandler(error, message) {
-    alert(error);
     this.isSpinnerLoading = false;
     this.openSnackBar(message, 'Error');
   }
@@ -107,7 +149,6 @@ export class ClientListingComponent implements OnInit {
       duration: 2000,
     });
   }
-
 
 
 

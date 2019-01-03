@@ -42,6 +42,7 @@
     <mat-form-field color="primary">
       <input matInput placeholder="Tax" type="number" formControlName="taxControl">
     </mat-form-field>
+
     <div>
       <button mat-raised-button type="submit" [disabled]="invoiceFormGroup.invalid" color="primary">
         Save
@@ -50,5 +51,6 @@
         Cancel
       </button>
     </div>
+
   </form>
 </mat-card>
