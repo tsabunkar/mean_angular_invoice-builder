@@ -1,5 +1,5 @@
 <mat-card class="mat-container">
-  <h3>Create Invoice</h3>
+  <h3>{{formTitle}}</h3>
   <form class="form-container" [formGroup]="invoiceFormGroup" novalidate (ngSubmit)="onFormSubmit()">
 
     <mat-form-field color="primary">

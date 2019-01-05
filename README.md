@@ -56,3 +56,11 @@ Model : $ ng g class invoices/models/invoice
 
 
 ------------------------------------------------------------------------------------------------
+CanActive -> Gaurd/protect our routes
+CanActiveChild -> Gaurd/protect child routes of parent routes
+Resolver -> Fetch Data before navigating  
+
+https://angular.io/guide/router#fetch-data-before-navigating
+
+------------------------------------------------------------------------------------------------
+

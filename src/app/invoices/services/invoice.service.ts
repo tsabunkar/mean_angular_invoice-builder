@@ -51,20 +51,38 @@ export class InvoiceService {
     return this._http.delete<Invoice>(`${BASE_URL}/invoice/${id}`);
   }
 
-  getInvoiceById(id: string): Observable<{}> {
+  /*   getInvoiceById(id: string) {
+      return this._http.get<Invoice>(`${BASE_URL}/invoice/${id}`)
+        .pipe(
+          map(responseData => {
+            responseData['itemControl'] = responseData['data']['item'];
+            responseData['quantityControl'] = responseData['data']['quantity'];
+            responseData['dateControl'] = responseData['data']['date'];
+            responseData['duedateControl'] = responseData['data']['dueDate'];
+            responseData['rateControl'] = responseData['data']['rate'];
+            responseData['taxControl'] = responseData['data']['tax'];
+            responseData['clientControl'] = responseData['data']['client'];
+
+            console.log('responseData', responseData);
+
+            return responseData;
+          })
+        );
+    } */
+
+  getInvoiceById(id: string) {
     return this._http.get<Invoice>(`${BASE_URL}/invoice/${id}`)
       .pipe(
         map(responseData => {
-          responseData['itemControl'] = responseData['data']['item'];
-          responseData['quantityControl'] = responseData['data']['quantity'];
-          responseData['dateControl'] = responseData['data']['date'];
-          responseData['duedateControl'] = responseData['data']['dueDate'];
-          responseData['rateControl'] = responseData['data']['rate'];
-          responseData['taxControl'] = responseData['data']['tax'];
-          responseData['clientControl'] = responseData['data']['client'];
-
-          console.log('responseData', responseData);
-          return responseData;
+          return {
+            'itemControl': responseData['data']['item'],
+            'quantityControl': responseData['data']['quantity'],
+            'dateControl': responseData['data']['date'],
+            'duedateControl': responseData['data']['dueDate'],
+            'rateControl': responseData['data']['rate'],
+            'taxControl': responseData['data']['tax'],
+            'clientControl': responseData['data']['client']
+          };
         })
       );
   }

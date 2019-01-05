@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { InvoiceService } from './services/invoice.service';
 import { InvoiceFormComponent } from './component/invoice-form/invoice-form.component';
 import { InvoiceListingAlternateComponent } from './component/invoice-listing/invoice-listing.component-alternate';
+import { EditInvoiceResolverService } from './services/edit-invoice-resolver.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { InvoiceListingAlternateComponent } from './component/invoice-listing/in
     InvoiceFormComponent
   ],
   providers: [
-    InvoiceService
+    InvoiceService,
+    EditInvoiceResolverService
   ]
 })
 export class InvoicesModule { }

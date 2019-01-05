@@ -17,6 +17,7 @@ import { map } from 'rxjs/operators';
 })
 export class InvoiceFormComponent implements OnInit {
 
+  formTitle = 'Create Invoice';
   invoiceFormGroup: FormGroup;
   private updatedInvoiceOnEdit: {};
   clients$: Observable<Client[]>;
@@ -86,17 +87,31 @@ export class InvoiceFormComponent implements OnInit {
       if (!id) {
         return;
       }
+      this.formTitle = 'Edit Invoice';
 
-      this._invoiceService.getInvoiceById(id)
-        .subscribe(invoice => {
-          this.updatedInvoiceOnEdit = invoice;
-          this.invoiceFormGroup.patchValue(invoice);
+      /*      this._invoiceService.getInvoiceById(id)
+             .subscribe(invoice => {
+               this.updatedInvoiceOnEdit = invoice;
+               this.invoiceFormGroup.patchValue(invoice);
+             },
+               err => {
+                 console.log(err);
+                 this.errorHandler(err, 'Falied to Get invoice');
+               }
+             ); */
+      // ?Instead of fetch data from backend in edit mode, altrnate way is using RESOLVER Concept
+      // ? which will prefetch the data before routing
+      this._route.data
+        .subscribe(data => {
+          this.updatedInvoiceOnEdit = data.resolverPreFetchingInvoice;
+          this.invoiceFormGroup.patchValue(data.resolverPreFetchingInvoice);
         },
           err => {
             console.log(err);
             this.errorHandler(err, 'Falied to Get invoice');
           }
         );
+
     });
 
   }

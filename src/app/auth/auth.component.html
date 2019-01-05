@@ -1,6 +1,10 @@
 <div class="limiter">
   <div class="container-login">
     <mat-card>
+      <div class="loading-shade" *ngIf="isSpinnerLoading">
+        <mat-spinner></mat-spinner>
+      </div>
+
       <mat-card-title>
         {{formTitle}}
       </mat-card-title>

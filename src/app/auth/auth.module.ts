@@ -10,7 +10,9 @@ import { RouterModule } from '@angular/router';
 import { ErrorInterceptorService } from '../core/services/error-interceptor.service';
 
 @NgModule({
-  declarations: [AuthComponent],
+  declarations: [
+    AuthComponent
+  ],
   imports: [
     CommonModule,
     MaterialModule,

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { JwtService } from './services/jwt.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -14,6 +15,8 @@ export class AuthComponent implements OnInit {
 
   authForm: FormGroup;
   formTitle = '';
+  isSpinnerLoading = false;
+  // subscription: Subscription;
 
   constructor(private _authService: AuthService,
     private _jwtService: JwtService,
@@ -39,6 +42,8 @@ export class AuthComponent implements OnInit {
 
   onFormSubmit() {
 
+    this.isSpinnerLoading = true;
+
     if (this.authForm.invalid) {
       return;
     }
@@ -53,7 +58,11 @@ export class AuthComponent implements OnInit {
 
 
         },
-          err => { console.log(err); }
+          err => { console.log(err); },
+          () => { // ! 3rd argum of subcribe() i.e->
+            // !oncompletetion (irrespective of succes/err) this below block of code will be called
+            // this.isSpinnerLoading = false;
+          }
         );
 
     } else {
@@ -67,9 +76,17 @@ export class AuthComponent implements OnInit {
           this._router.navigate(['dashboard', 'invoices']);
 
         },
-          err => { console.log(err); }
+          err => { console.log('autCOmponent', err); },
+          () => { // ! 3rd argum of subcribe() i.e->
+            // !oncompletetion (irrespective of succes/err) this below block of code will be called
+            // this.isSpinnerLoading = false;
+          }
         );
     }
 
   }
+
+  /*   ngOnDestroy(): void {
+      this.subscription.unsubscribe();
+    } */
 }
