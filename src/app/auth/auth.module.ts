@@ -4,9 +4,10 @@ import { AuthComponent } from './auth.component';
 import { MaterialModule } from '../shared/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtService } from './services/jwt.service';
 import { RouterModule } from '@angular/router';
+import { ErrorInterceptorService } from '../core/services/error-interceptor.service';
 
 @NgModule({
   declarations: [AuthComponent],
@@ -19,7 +20,9 @@ import { RouterModule } from '@angular/router';
   ],
   providers: [
     AuthService,
-    JwtService
+    JwtService,
+    // !using error interceptor only in Authmodule
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true }
   ]
 })
 export class AuthModule { }

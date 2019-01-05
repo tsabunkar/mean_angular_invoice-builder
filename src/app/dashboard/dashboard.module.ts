@@ -13,7 +13,9 @@ import { ClientsModule } from '../clients/clients.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from '../core/services/auth-interceptor.service';
 
-
+// !Dashboard Module is parent module for invoice module and client module
+// !AppModule is parent module for Dashboard module
+// !Intercepting only dashboard module (which will indeirectly intercpet both invoice and client modules)
 @NgModule({
   declarations: [
     DashboardComponent,

@@ -3,6 +3,7 @@ import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest } from '@angular/c
 import { Observable } from 'rxjs';
 import { JwtService } from 'src/app/auth/services/jwt.service';
 
+// !Intercepting Request send from CLient to Server
 @Injectable({ providedIn: 'root' })
 export class AuthInterceptorService implements HttpInterceptor {
 

@@ -10,10 +10,14 @@ import { MatButtonModule, MatIconModule } from '@angular/material';
 import { MaterialModule } from './shared/material.module';
 import { AuthModule } from './auth/auth.module';
 import { CoreModule } from './core/core.module';
+import { ErrorComponent } from './shared/error/error.component';
+import { ErrorInterceptorService } from './core/services/error-interceptor.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +28,11 @@ import { CoreModule } from './core/core.module';
     AuthModule,
     CoreModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    ErrorComponent
+  ]
 })
 export class AppModule { }
