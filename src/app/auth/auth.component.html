@@ -1,0 +1,54 @@
+<div class="limiter">
+  <div class="container-login">
+    <mat-card>
+      <mat-card-title>
+        {{formTitle}}
+      </mat-card-title>
+
+      <mat-card-content>
+        <form class="form-container" [formGroup]="authForm" novalidate (ngSubmit)="onFormSubmit()">
+
+          <mat-form-field color="primary">
+            <input matInput placeholder="Email" formControlName="email" autocomplete="email">
+            <mat-error *ngIf="authForm.controls['email']['invalid']
+                  && authForm.controls['email']['touched']">
+              Enter valid email address</mat-error>
+          </mat-form-field>
+
+          <mat-form-field color="primary">
+            <input matInput placeholder="Password" formControlName="password" type="password">
+            <mat-error *ngIf="authForm.controls['password']['invalid']
+            && authForm.controls['email']['touched']">
+              Password is Required</mat-error>
+          </mat-form-field>
+
+
+          <div>
+            <button mat-raised-button type="submit" [disabled]="authForm.invalid" color="primary">
+              {{formTitle}}
+            </button>
+            <button mat-raised-button type="reset">
+              Cancel
+            </button>
+          </div>
+
+        </form>
+      </mat-card-content>
+
+      <div class="alternative" *ngIf="formTitle === 'Signin'">
+        <p>don't have an account yet ?</p>
+        <button mat-raised-button type="button" color="accent" [routerLink]="['/signup']">
+          Signup
+        </button>
+      </div>
+      <div class="alternative" *ngIf="formTitle === 'Signup'" [routerLink]="['/login']">
+        <p>Already have an account ?</p>
+        <button mat-raised-button type="button" color="accent">
+          Login
+        </button>
+      </div>
+
+
+    </mat-card>
+  </div>
+</div>

@@ -10,6 +10,8 @@ import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { InvoicesModule } from '../invoices/invoices.module';
 import { ClientsModule } from '../clients/clients.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptorService } from '../core/services/auth-interceptor.service';
 
 
 @NgModule({
@@ -26,6 +28,9 @@ import { ClientsModule } from '../clients/clients.module';
     MaterialModule,
     InvoicesModule, // ! importing Feature Module in dashboard Module itself, rather than AppModule
     ClientsModule // ! importing Feature Module in dashboard Module itself,
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
   ]
 })
-export class InvoiceBuilderModule { }
+export class DashboardModule { }
