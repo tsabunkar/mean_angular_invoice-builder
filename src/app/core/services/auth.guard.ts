@@ -6,6 +6,7 @@ import { JwtService } from 'src/app/auth/services/jwt.service';
 @Injectable({
   providedIn: 'root'
 })
+// export class AuthGuard implements CanActivate, CanActivateChild {
 export class AuthGuard implements CanActivate {
 
   constructor(private _jwtService: JwtService,
@@ -23,10 +24,10 @@ export class AuthGuard implements CanActivate {
     }
   }
 
-  /*
-    canActivateChild(): boolean {// !protect all child routes of the parent route
-      return this.canActivate();
-    } */
+
+/*   canActivateChild(): boolean {// !protect all child routes of the parent route
+    return this.canActivate();
+  } */
 
 
 }
