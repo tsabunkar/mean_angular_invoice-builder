@@ -31,7 +31,7 @@
             <button mat-raised-button type="submit" [disabled]="authForm.invalid" color="primary">
               {{formTitle}}
             </button>
-            <button mat-raised-button type="reset">
+            <button mat-raised-button type="reset" class="right">
               Cancel
             </button>
             <!-- <button mat-raised-button type="button" (click)="googleAuthHandler()">
@@ -40,9 +40,18 @@
 
             <!-- <a href="http://localhost:3000/api/auth/google" mat-button>Google</a> -->
             <!-- !Instead use proxy -> proxy.config.json -->
-            <a href="/api/auth/google" mat-button>Google</a>
-            <a href="/api/auth/twitter" mat-button>Twitter</a>
-            <a href="/api/auth/github" mat-button>GitHub</a>
+            <a href="/api/auth/google" class="btn btn-social btn-block btn-google" mat-button>
+              <img src="../../assets/icons/social/icons8-google-color-24.png">
+              Google
+            </a>
+            <a href="/api/auth/twitter" class="btn btn-social btn-block btn-twitter" mat-button>
+              <img src="../../assets/icons/social/icons8-twitter-24.png">
+              Twitter
+            </a>
+            <a href="/api/auth/github" class="btn btn-social btn-block btn-github" mat-button>
+              <img src="../../assets/icons/social/icons8-github-color-24.png">
+              GitHub
+            </a>
           </div>
 
         </form>
@@ -50,13 +59,13 @@
 
       <div class="alternative" *ngIf="formTitle === 'Signin'">
         <p>don't have an account yet ?</p>
-        <button mat-raised-button type="button" color="accent" [routerLink]="['/signup']">
+        <button mat-raised-button type="button" class="btn-block" color="accent" [routerLink]="['/signup']">
           Signup
         </button>
       </div>
       <div class="alternative" *ngIf="formTitle === 'Signup'" [routerLink]="['/login']">
         <p>Already have an account ?</p>
-        <button mat-raised-button type="button" color="accent">
+        <button mat-raised-button type="button" class="btn-block" color="accent">
           Login
         </button>
       </div>

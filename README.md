@@ -63,4 +63,9 @@ Resolver -> Fetch Data before navigating
 https://angular.io/guide/router#fetch-data-before-navigating
 
 ------------------------------------------------------------------------------------------------
+Where to get social aggegrator icons ?
+https://icons8.com/icons
 
+Download the icons in png format of size 24px
+
+------------------------------------------------------------------------------------------------
