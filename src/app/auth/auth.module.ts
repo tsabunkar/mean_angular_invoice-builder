@@ -17,7 +17,7 @@ import { ErrorInterceptorService } from '../core/services/error-interceptor.serv
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
-    HttpClientModule,
+    // HttpClientModule,
     RouterModule
   ],
   providers: [

@@ -32,7 +32,7 @@ import { AuthInterceptorService } from '../core/services/auth-interceptor.servic
     ClientsModule // ! importing Feature Module in dashboard Module itself,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
   ]
 })
 export class DashboardModule { }

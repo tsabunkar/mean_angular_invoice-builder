@@ -16,7 +16,7 @@ import { DialogFormComponent } from './component/dailog/dialog.component';
     CommonModule,
     MaterialModule,
     FormsModule,
-    HttpClientModule,
+    // HttpClientModule,
     ReactiveFormsModule
   ],
   exports: [

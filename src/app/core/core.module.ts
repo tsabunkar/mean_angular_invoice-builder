@@ -7,7 +7,7 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
   declarations: [],
   imports: [
     CommonModule,
-    HttpClientModule
+    // HttpClientModule
   ],
   providers: [
     AuthInterceptorService

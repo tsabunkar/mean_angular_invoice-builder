@@ -39,6 +39,7 @@ export class AuthGuard implements CanActivate {
           map(authenticated => {
             if (authenticated) {// !authenticated user by 3rd party vendor
               this._jwtService.setToken(vendorToken); // !setting vendorToken in local storage
+              this._router.navigate(['/dashboard', 'invoices']);
               return true;
 
             }

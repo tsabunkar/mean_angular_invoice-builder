@@ -40,4 +40,8 @@ export class AuthService {
     return this._http.get<boolean>(`${environment.api_url}/auth/authenticate`, httpOptions);
   }
 
+  logoutUser(): Observable<{ message: string }> {
+    return this._http.get<{ message: string }>(`${environment.api_url}/auth/logout`);
+  }
+
 }

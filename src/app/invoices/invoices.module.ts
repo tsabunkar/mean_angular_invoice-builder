@@ -19,7 +19,7 @@ import { EditInvoiceResolverService } from './services/edit-invoice-resolver.ser
     CommonModule,
     MaterialModule,
     FormsModule,
-    HttpClientModule,
+    // HttpClientModule,
     ReactiveFormsModule
   ],
   exports: [
