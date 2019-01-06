@@ -89,4 +89,13 @@ export class AuthComponent implements OnInit {
   /*   ngOnDestroy(): void {
       this.subscription.unsubscribe();
     } */
+
+  googleAuthHandler() {
+    this._authService.googleAuth()
+      .subscribe(
+        data => {
+          console.log(data);
+        }
+      );
+  }
 }

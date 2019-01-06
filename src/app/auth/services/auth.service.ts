@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { User } from '../user';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -19,6 +19,25 @@ export class AuthService {
   login(payload: User): Observable<HttpResponse<Response>> {
     return this._http
       .post<Response>(`${environment.api_url}/user/signin`, payload, { observe: 'response' });
+  }
+
+
+  googleAuth(): Observable<Response> {
+    return this._http.get<Response>(`${environment.api_url}/auth/google`);
+  }
+
+
+
+
+  validateVendorTokenIsValidJWTToken(authToken): Observable<boolean> {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+        'Authorization': `bearer ${authToken}`
+      })
+    };
+    return this._http.get<boolean>(`${environment.api_url}/auth/authenticate`, httpOptions);
   }
 
 }
