@@ -10,9 +10,9 @@
 .mat-card {
   position: absolute;
   width: 300px;
-  height: 450px;
+  height: 525px;
   z-index: 10;
-  top: 30%;
+  top: 20%;
   left: 50%;
   margin: -100px 0 0 -150px;
   // background: red;
@@ -79,6 +79,19 @@
   color: #fff;
   background-color: #55acee;
   border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-facebook {
+  color: #fff;
+  background-color: #3b5998;
+  border-color: rgb(59, 89, 152);
+}
+
+
+.btn-linkedin {
+  color: #fff;
+  background-color: #283e4a;
+  border-color: rgb(40, 62, 74);
 }
 
 .btn-block {
