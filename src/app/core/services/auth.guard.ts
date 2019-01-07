@@ -8,8 +8,8 @@ import { map, catchError, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-// export class AuthGuard implements CanActivate, CanActivateChild {
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanActivateChild {
+// export class AuthGuard implements CanActivate {
 
   constructor(private _jwtService: JwtService,
     private _router: Router,
@@ -63,10 +63,10 @@ export class AuthGuard implements CanActivate {
   }
 
 
-  /*   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
+    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
       : Observable<boolean> {// !protect all child routes of the parent route
       return this.canActivate(route, state);
-    } */
+    }
 
 
 }

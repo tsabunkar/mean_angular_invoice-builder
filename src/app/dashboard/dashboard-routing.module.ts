@@ -16,15 +16,16 @@ const routes: Routes = [
     component: DashboardComponent,
     canActivate: [AuthGuard], // !Gaurding below routes
     children: [
-      { path: '', component: MainContentComponent },
-      { path: 'invoices', component: InvoiceListingComponent },
-      { path: 'invoices/new', component: InvoiceFormComponent },
+      { path: '', component: MainContentComponent, canActivateChild: [AuthGuard] },
+      { path: 'invoices', component: InvoiceListingComponent, canActivateChild: [AuthGuard] },
+      { path: 'invoices/new', component: InvoiceFormComponent, canActivateChild: [AuthGuard] },
       {
         path: 'invoices/:id', component: InvoiceFormComponent,
+        canActivateChild: [AuthGuard],
         // ?Concept of RESOLVERS
         resolve: { resolverPreFetchingInvoice: EditInvoiceResolverService } // !Fetching data before rotuing to 'invoices/:id'
       },
-      { path: 'clients', component: ClientListingComponent },
+      { path: 'clients', component: ClientListingComponent, canActivateChild: [AuthGuard] },
     ]
   }
 ];

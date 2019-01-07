@@ -98,4 +98,8 @@ export class AuthComponent implements OnInit {
         }
       );
   }
+
+  forgotPasswordHandler() {
+    this._router.navigate(['/forgotpassword']);
+  }
 }

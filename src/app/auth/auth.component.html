@@ -28,12 +28,15 @@
 
 
           <div>
-            <button mat-raised-button type="submit" [disabled]="authForm.invalid" color="primary">
-              {{formTitle}}
-            </button>
-            <button mat-raised-button type="reset" class="right">
-              Cancel
-            </button>
+            <div>
+              <button mat-raised-button type="submit" [disabled]="authForm.invalid" color="primary">
+                {{formTitle}}
+              </button>
+              <button mat-raised-button type="reset" class="right">
+                Cancel
+              </button>
+            </div>
+            <a class="btn btn-block forgot-password" (click)="forgotPasswordHandler()">forgot password</a>
             <!-- <button mat-raised-button type="button" (click)="googleAuthHandler()">
               Google
             </button> -->
