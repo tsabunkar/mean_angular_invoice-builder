@@ -8,13 +8,13 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent implements OnInit {
-
   formGrp: FormGroup;
   isSpinnerLoading = false;
 
-  constructor(private _formBuilder: FormBuilder,
+  constructor(
+    private _formBuilder: FormBuilder,
     private _authService: AuthService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.initializeForm();
@@ -28,6 +28,10 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onFormSubmit() {
-
+    // console.log(this.formGrp.value);
+    if (this.formGrp.value.password !== this.formGrp.value.confirmpassword) {
+      console.log('Password and confirm password did not match');
+      return;
+    }
   }
 }
