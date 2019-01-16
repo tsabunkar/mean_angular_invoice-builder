@@ -48,4 +48,19 @@ export class AuthService {
     return this._http.post<{ message: string }>(`${environment.api_url}/user/forgotpassword`, data);
   }
 
+  resetPassword(body): Observable<{ message: string }> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `bearer ${body.token}`
+      })
+    };
+
+    return this._http.put<{ message: string }>(
+      `${environment.api_url}/user/resetpassword`,
+      { password: body.password },
+      httpOptions
+    );
+  }
+
 }
