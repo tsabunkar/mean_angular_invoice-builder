@@ -70,6 +70,10 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="[element._id,'view']">
+            <mat-icon>pageview</mat-icon>
+            <span>View</span>
+          </button>
           <button mat-menu-item (click)="editClickHandler(element._id)">
             <mat-icon>edit</mat-icon>
             <span>Edit</span>

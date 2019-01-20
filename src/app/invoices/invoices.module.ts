@@ -8,19 +8,23 @@ import { InvoiceService } from './services/invoice.service';
 import { InvoiceFormComponent } from './component/invoice-form/invoice-form.component';
 import { InvoiceListingAlternateComponent } from './component/invoice-listing/invoice-listing.component-alternate';
 import { EditInvoiceResolverService } from './services/edit-invoice-resolver.service';
+import { InvoiceViewComponent } from './component/invoice-view/invoice-view.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     InvoiceListingComponent,
     InvoiceFormComponent,
-    InvoiceListingAlternateComponent
+    InvoiceListingAlternateComponent,
+    InvoiceViewComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     FormsModule,
     // HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   exports: [
     InvoiceListingComponent,

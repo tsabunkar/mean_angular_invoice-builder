@@ -27,6 +27,7 @@ export class EditInvoiceResolverService implements Resolve<Invoice> {
         map(invoice => {
 
           if (invoice) {
+            console.log('invoice data ', invoice);
             return invoice;
           } else {
             this._router.navigate(['/dashboard', 'invoices']);
