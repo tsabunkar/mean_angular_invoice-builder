@@ -21,9 +21,13 @@ export class ErrorInterceptorService {
         console.log('Im from error -httpinterceptor', error);
         // !Error handling logic here
 
-        let errorMessage = 'An Unkown Error Occured!';
+        let errorMessage = 'Error !!';
         if (error.error.message.message) {
           errorMessage = error.error.message.message;
+        } else if (error.error.message) {
+          errorMessage = error.error.message;
+        } else {
+          errorMessage = 'Unkown Error Occurred !!';
         }
         this.dialog.open(ErrorComponent, { data: { message: errorMessage } });
 
