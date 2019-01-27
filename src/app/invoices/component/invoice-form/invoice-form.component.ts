@@ -105,6 +105,24 @@ export class InvoiceFormComponent implements OnInit {
         .subscribe(data => {
           this.updatedInvoiceOnEdit = data.resolverPreFetchingInvoice;
           this.invoiceFormGroup.patchValue(data.resolverPreFetchingInvoice);
+
+
+
+          this.invoiceFormGroup.patchValue({
+            itemControl: this.updatedInvoiceOnEdit['itemControl'],
+            quantityControl: this.updatedInvoiceOnEdit['quantityControl'],
+            dateControl: this.updatedInvoiceOnEdit['dateControl'],
+            duedateControl: this.updatedInvoiceOnEdit['duedateControl'],
+            rateControl: this.updatedInvoiceOnEdit['rateControl'],
+            taxControl: this.updatedInvoiceOnEdit['taxControl'],
+            // clientControl: this.updatedInvoiceOnEdit['clientControl']['_id'],
+          });
+          // !if client property exist then only update the Clients drop-down in the template
+          if (this.updatedInvoiceOnEdit['clientControl']) { // client exist then only patch the value
+            this.invoiceFormGroup.patchValue({
+              clientControl: this.updatedInvoiceOnEdit['clientControl']['_id']
+            });
+          }
         },
           err => {
             console.log(err);

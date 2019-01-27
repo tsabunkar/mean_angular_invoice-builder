@@ -74,7 +74,9 @@ export class InvoiceService {
     return this._http.get<Invoice>(`${BASE_URL}/invoice/${id}`)
       .pipe(
         map(responseData => {
+          // console.log('responsedata------',responseData);
           return {
+            'idControl' : responseData['data']['_id'],
             'itemControl': responseData['data']['item'],
             'quantityControl': responseData['data']['quantity'],
             'dateControl': responseData['data']['date'],
